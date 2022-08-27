@@ -24,12 +24,14 @@ class LinkedList {
   }
 
   append(node) {
-    if (!this.head.value) {
-      this.head.value = 'head';
-      this.head.next = node.next;
+    let head = this.getHead();
+    if (!head.value) {
+      head.value = 'head';
+      head.next = node.next;
     }
 
     let tail = this.getTail();
+    console.log(tail);
 
     tail.next = node;
     this.size++;
@@ -99,6 +101,20 @@ class LinkedList {
     string = string + ` -> (${head.value}) -> null`;
     return string.slice(4, -1);
   }
+
+  insertAt(value, index) {
+    let insertNode = new Node(value);
+    let postNode = this.atIndex(index);
+    let preNode = this.atIndex(index - 1);
+    insertNode.next = postNode;
+    preNode.next = insertNode;
+  }
+
+  removeAt(index) {
+    let preNode = this.atIndex(index - 1);
+    let postNode = this.atIndex(index + 1);
+    preNode.next = postNode;
+  }
 }
 
 let myList = new LinkedList();
@@ -118,7 +134,6 @@ myList.append(NodeC);
 myList.append(NodeD);
 myList.append(NodeE);
 myList.prepend(Node0);
-myList.append(NodeA);
 
 console.log(myList);
 console.log(myList.size);
@@ -136,3 +151,8 @@ myList.append(NodeG);
 myList.append(NodeH);
 myList.prepend(NodeOmega);
 console.log(myList.toString());
+myList.insertAt('7', 4);
+console.log(myList.atIndex(4));
+myList.removeAt(4);
+console.log(myList.atIndex(4));
+console.log(myList);
